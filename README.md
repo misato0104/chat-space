@@ -7,7 +7,7 @@
 |nickname|string|null: false|
 ### Association
 - has_many :messages
-- has_many :groups
+- has_many :groups, thopugh: :groups_users
 
 ## groupsテーブル
 |Column|Type|Options|
@@ -16,7 +16,7 @@
 |add_user_id|strung|null: false|
 |user_id|integer|null: false, foreign_key: true|
 ### Association
-- has_many: users
+- has_many: users, thopugh: :groups_users
 - has_many :messages
 
 ## messagesテーブル
