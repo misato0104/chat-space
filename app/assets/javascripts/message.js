@@ -16,7 +16,7 @@ $(function(){
              ${message.content}
            </p>
          </div>
-         ${image}
+         <img class="lower-message__image" src="${messages.image}" alt="">
        </div>`
      return html;
    } else {
