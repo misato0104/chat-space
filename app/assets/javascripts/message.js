@@ -1,7 +1,7 @@
 $(function(){ 
   function buildHTML(message){
-
-    image = (message.image)? `<img class="lower-message__image" src="${message.image}">` : "";
+    console.log(message)
+    var image = (message.image.url)? `<img class="lower-message__image" src="${message.image.url}">` : "";
 
     var html =  `
                   <div class="message" data-message-id=${message.id}>
@@ -10,7 +10,7 @@ $(function(){
                         ${message.user_name}
                       </div>
                       <div class="upper-message__date">
-                        ${message.date}
+                        ${message.created_at}
                       </div>
                     </div>
                     <div class="lower-message">
@@ -24,10 +24,10 @@ $(function(){
     return html;
   }
 
-  $('.js-form').on('submit', function(e){
+  $('.new_message').on('submit', function(e){
     e.preventDefault();
     var formData = new FormData(this);
-    var url = $(this).attr('action')
+    var url = $(this).attr('action');
     $.ajax({
       url: url,
       type: "POST",
@@ -51,7 +51,6 @@ $(function(){
   var reloadMessages = function() {
     if (location.href.match(/groups\/\d+\/messages/))
     last_message_id = $('.message:last').data('message-id');
-    console.log(last_message_id)
     $.ajax({
       url: 'api/messages',
       type: 'GET',
