@@ -1,4 +1,6 @@
 $(function() {
+  
+
   function addUser(user) {
     let html = `
       <div class="chat-group-user clearfix">
@@ -30,6 +32,7 @@ $(function() {
     $(`#${userId}`).append(html);
   }
   $("#user-search-field").on("keyup", function() {
+    console.log("message")
     let input = $("#user-search-field").val();
     $.ajax({
       type: "GET",

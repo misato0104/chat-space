@@ -1,4 +1,5 @@
 $(function(){ 
+
   function buildHTML(message){
     console.log(message)
     var image = (message.image.url)? `<img class="lower-message__image" src="${message.image.url}">` : "";
@@ -69,5 +70,7 @@ $(function(){
       alert('自動更新に失敗しました');
     });
   };
+  if(location.href.match(/groups\/\d+\/messages/)){
   setInterval(reloadMessages, 5000);
+  }
 });
