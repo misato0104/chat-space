@@ -58,13 +58,14 @@ $(document).on('turbolinks:load', function() {
       });
   });
   $(document).on("click", ".chat-group-user__btn--add", function() {
-    const userName = $(this).attr("data-user-name");
-    const userId = $(this).attr("data-user-id");
+    val userName = $(this).attr("data-user-name");
+    val userId = $(this).attr("data-user-id");
+    val html = addDeleteUser(userName, userId)
+    val html = addMember(userId)
+    $("#chat-group-users").append(html);
     $(this)
       .parent()
       .remove();
-    addDeleteUser(userName, userId);
-    addMember(userId);
   });
   $(document).on("click", ".chat-group-user__btn--remove", function() {
     $(this)
