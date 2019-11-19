@@ -4,7 +4,6 @@ $(document).on('turbolinks:load', function() {
   function addUser(user) {
     let html = `
       <div class="chat-group-user clearfix">
-      <input name='group[user_ids][]' type='hidden' value='${id}'>
         <p class="chat-group-user__name">${user.name}</p>
         <div class="user-search-add chat-group-user__btn chat-group-user__btn--add" data-user-id="${user.id}" data-user-name="${user.name}">追加</div>
       </div>
@@ -12,10 +11,10 @@ $(document).on('turbolinks:load', function() {
     $("#user-search-result").append(html);
   }
 
-  function addNoUser() {
+  function addNoUser(user) {
     let html = `
       <div class="chat-group-user clearfix">
-        <p class="chat-group-user__name">ユーザーが見つかりません</p>
+        <p class="chat-group-user__name">${user}</p>
       </div>
     `;
     $("#user-search-result").append(html);
@@ -23,16 +22,18 @@ $(document).on('turbolinks:load', function() {
   function addDeleteUser(name, id) {
     let html = `
     <div class="chat-group-user clearfix" id="${id}">
+      <input name='group[user_ids][]' type='hidden' value='${id}'>
       <p class="chat-group-user__name">${name}</p>
       <div class="user-search-remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn" data-user-id="${id}" data-user-name="${name}">削除</div>
     </div>`;
     $(".js-add-user").append(html);
   }
-  function addMember(userId) {
-    let html = `<input value="${userId}" name="group[user_ids][]" type="hidden" id="group_user_ids_${userId}" />`;
-    $(`#${userId}`).append(html);
-  }
+  // function addMember(userId) {
+  //   let html = `<input value="${userId}" name="group[user_ids][]" type="hidden" id="group_user_ids_${userId}" />`;
+  //   $(`#${userId}`).append(html);
+  // }
   $("#user-search-field").on("keyup", function() {
+    console.log("あああああ")
     let input = $("#user-search-field").val();
     $.ajax({
       type: "GET",
@@ -58,10 +59,10 @@ $(document).on('turbolinks:load', function() {
       });
   });
   $(document).on("click", ".chat-group-user__btn--add", function() {
-    val userName = $(this).attr("data-user-name");
-    val userId = $(this).attr("data-user-id");
-    val html = addDeleteUser(userName, userId)
-    val html = addMember(userId)
+    const userName = $(this).attr("data-user-name");
+    const userId = $(this).attr("data-user-id");
+    const html = addDeleteUser(userName, userId)
+    // const html = addMember(userId)
     $("#chat-group-users").append(html);
     $(this)
       .parent()

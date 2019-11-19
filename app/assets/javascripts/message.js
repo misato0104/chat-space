@@ -50,26 +50,27 @@ $(document).on('turbolinks:load', function() {
   });
 
   var reloadMessages = function() {
-    if (location.href.match(/groups\/\d+\/messages/))
-    last_message_id = $('.message:last').data('message-id');
-    $.ajax({
-      url: 'api/messages',
-      type: 'GET',
-      dataType: 'json',
-      data: {id: last_message_id}
-    })
-    .done(function(messages) {
-      var insertHTML = '';
-      messages.forEach(function (message) {
-        insertHTML = buildHTML(message);
-        $('.messages').append(insertHTML);
-        $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+    if (location.href.match(/groups\/\d+\/messages/)){
+      last_message_id = $('.message:last').data('message-id');
+      $.ajax({
+        url: 'api/messages',
+        type: 'GET',
+        dataType: 'json',
+        data: {id: last_message_id}
       })
-    })
-    .fail(function() {
-      alert('自動更新に失敗しました');
-    });
-  };
+      .done(function(messages) {
+        var insertHTML = '';
+        messages.forEach(function (message) {
+          insertHTML = buildHTML(message);
+          $('.messages').append(insertHTML);
+          $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
+        })
+      })
+      .fail(function() {
+        alert('自動更新に失敗しました');
+      });
+    };
+  }
   if(location.href.match(/groups\/\d+\/messages/)){
   setInterval(reloadMessages, 5000);
   }
