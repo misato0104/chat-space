@@ -4,6 +4,7 @@ $(document).on('turbolinks:load', function() {
   function addUser(user) {
     let html = `
       <div class="chat-group-user clearfix">
+      <input name='group[user_ids][]' type='hidden' value='${id}'>
         <p class="chat-group-user__name">${user.name}</p>
         <div class="user-search-add chat-group-user__btn chat-group-user__btn--add" data-user-id="${user.id}" data-user-name="${user.name}">追加</div>
       </div>
@@ -32,7 +33,6 @@ $(document).on('turbolinks:load', function() {
     $(`#${userId}`).append(html);
   }
   $("#user-search-field").on("keyup", function() {
-    console.log("message")
     let input = $("#user-search-field").val();
     $.ajax({
       type: "GET",
@@ -50,7 +50,7 @@ $(document).on('turbolinks:load', function() {
         } else if (input.length == 0) {
           return false;
         } else {
-          addNoUser();
+          addNoUser("一致なし");
         }
       })
       .fail(function() {
@@ -58,7 +58,6 @@ $(document).on('turbolinks:load', function() {
       });
   });
   $(document).on("click", ".chat-group-user__btn--add", function() {
-    // console.log
     const userName = $(this).attr("data-user-name");
     const userId = $(this).attr("data-user-id");
     $(this)
